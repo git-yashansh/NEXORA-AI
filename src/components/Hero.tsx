@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
     }
   }, []);
 
-  const logoDisplaySize = 128; // Logo size
+  const logoDisplaySize = 115; // Logo size
   const orbitOffsetX = -5;
   const orbitOffsetY = -14;
 
@@ -74,13 +74,14 @@ const Hero: React.FC = () => {
         {/* Logo with Electric Border */}
         <div className="relative mb-4 flex justify-center items-center">
           <ElectricBorder
+            
             thickness={6}     // Border thickness
             speed={2}         // Slightly faster electric movement
             chaos={1.1}         // More sparks
             style={{ width: logoDisplaySize, height: logoDisplaySize }}
           >
             <img
-              src="/cropped_circle_image.png"
+              src="/new.png"
               alt="Logo"
               className="w-full h-full object-contain rounded-full"
             />
