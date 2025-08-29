@@ -8,14 +8,13 @@ import {
   ArrowRight,
   CheckCircle
 } from 'lucide-react';
-
 /**
  * Contact Section Component
  * Features: Contact form, WhatsApp integration, contact information
  * Email: kr.yashansh123@gmail.com, Phone: 9304840306
  */
 const Contact: React.FC = () => {
-  const enquireNowUrl = "https://forms.google.com/your-form-id"; // Replace with actual Google Form URL
+  const enquireNowUrl = "https://forms.google.com/your-form-id"; // Keep your Enquire Now link
   const [formData, setFormData] = useState({
     name: '',
     email: '', 
@@ -30,19 +29,36 @@ const Contact: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically integrate with a form service or API
-    console.log('Form submitted:', formData);
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 3000);
-    setFormData({ name: '', email: '', message: '' });
+
+    try {
+      const response = await fetch('https://formspree.io/f/xeolqqzr', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setIsSubmitted(false), 3000);
+      } else {
+        alert('Failed to send message. Please try again.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Failed to send message. Please try again.');
+    }
   };
 
   const contactInfo = {
     email: 'kr.yashansh123@gmail.com',
     phone: '9304840306',
-    whatsapp: '919304840306', // Include country code for WhatsApp
+    whatsapp: '919304840306',
     location: 'India'
   };
 
@@ -99,12 +115,10 @@ const Contact: React.FC = () => {
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
           <div className="bg-gradient-to-br from-gray-900/80 to-black/60 backdrop-blur-sm border border-purple-400/20 rounded-3xl p-8 relative">
-            {/* Glow effect */}
+          {/* Glow effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-transparent rounded-3xl blur-xl" />
-            
             <div className="relative z-10">
               <h3 className="text-2xl font-semibold text-white mb-6">Send us a Message</h3>
-              
               {isSubmitted ? (
                 <div className="text-center py-8">
                   <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
@@ -128,7 +142,6 @@ const Contact: React.FC = () => {
                       placeholder="Enter your full name"
                     />
                   </div>
-
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                       Email Address *
@@ -144,7 +157,6 @@ const Contact: React.FC = () => {
                       placeholder="your.email@example.com"
                     />
                   </div>
-
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
                       Project Details *
@@ -160,7 +172,6 @@ const Contact: React.FC = () => {
                       placeholder="Tell us about your project requirements, goals, and any specific technologies you're interested in..."
                     />
                   </div>
-
                   <button
                     type="submit"
                     className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-purple-800 text-white py-3 px-6 rounded-lg font-semibold hover:from-purple-700 hover:to-purple-900 transition-all duration-300 shadow-lg shadow-purple-500/25 group"
@@ -175,81 +186,79 @@ const Contact: React.FC = () => {
 
           {/* Contact Information */}
           <div className="space-y-8">
-            {/* Quick Contact Cards */}
-            <div className="grid gap-6">
-              {/* Email */}
-              <div className="bg-gradient-to-br from-gray-900/80 to-purple-900/20 backdrop-blur-sm border border-purple-400/20 rounded-2xl p-6 hover:border-purple-400/40 transition-all duration-300 group">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-gradient-to-r from-purple-600/20 to-white/10 rounded-lg text-purple-400 group-hover:text-white transition-colors duration-300">
-                    <Mail className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-semibold mb-1">Email Us</h4>
-                    <a 
-                      href={`mailto:${contactInfo.email}`}
-                      className="text-purple-400 hover:text-white transition-colors duration-300"
-                    >
-                      {contactInfo.email}
-                    </a>
-                  </div>
+            {/* Keep all your buttons/cards 100% intact */}
+            {/* Email */}
+            <div className="bg-gradient-to-br from-gray-900/80 to-purple-900/20 backdrop-blur-sm border border-purple-400/20 rounded-2xl p-6 hover:border-purple-400/40 transition-all duration-300 group">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-gradient-to-r from-purple-600/20 to-white/10 rounded-lg text-purple-400 group-hover:text-white transition-colors duration-300">
+                  <Mail className="w-6 h-6" />
                 </div>
-              </div>
-
-              {/* Phone */}
-              <div className="bg-gradient-to-br from-gray-900/80 to-purple-900/20 backdrop-blur-sm border border-purple-400/20 rounded-2xl p-6 hover:border-purple-400/40 transition-all duration-300 group">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-gradient-to-r from-purple-600/20 to-white/10 rounded-lg text-purple-400 group-hover:text-white transition-colors duration-300">
-                    <Phone className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-semibold mb-1">Call Us</h4>
-                    <a 
-                      href={`tel:+91${contactInfo.phone}`}
-                      className="text-purple-400 hover:text-white transition-colors duration-300"
-                    >
-                      +91 {contactInfo.phone}
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* WhatsApp */}
-              <div className="bg-gradient-to-br from-gray-900/80 to-green-900/20 backdrop-blur-sm border border-green-400/20 rounded-2xl p-6 hover:border-green-400/40 transition-all duration-300 group">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-gradient-to-r from-green-600/20 to-white/10 rounded-lg text-green-400 group-hover:text-white transition-colors duration-300">
-                    <MessageSquare className="w-6 h-6" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-white font-semibold mb-1">WhatsApp</h4>
-                    <p className="text-green-400 text-sm mb-2">Get instant responses</p>
-                    <a
-                      href={whatsappUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-green-400 hover:text-white transition-colors duration-300 text-sm font-medium"
-                    >
-                      Start Chat
-                      <ArrowRight className="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Location */}
-              <div className="bg-gradient-to-br from-gray-900/80 to-purple-900/20 backdrop-blur-sm border border-purple-400/20 rounded-2xl p-6 hover:border-purple-400/40 transition-all duration-300 group">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-gradient-to-r from-purple-600/20 to-white/10 rounded-lg text-purple-400 group-hover:text-white transition-colors duration-300">
-                    <MapPin className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-semibold mb-1">Location</h4>
-                    <p className="text-purple-400">{contactInfo.location}</p>
-                  </div>
+                <div>
+                  <h4 className="text-white font-semibold mb-1">Email Us</h4>
+                  <a 
+                    href={`mailto:${contactInfo.email}`}
+                    className="text-purple-400 hover:text-white transition-colors duration-300"
+                  >
+                    {contactInfo.email}
+                  </a>
                 </div>
               </div>
             </div>
 
-            {/* Google Form CTA */}
+            {/* Phone */}
+            <div className="bg-gradient-to-br from-gray-900/80 to-purple-900/20 backdrop-blur-sm border border-purple-400/20 rounded-2xl p-6 hover:border-purple-400/40 transition-all duration-300 group">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-gradient-to-r from-purple-600/20 to-white/10 rounded-lg text-purple-400 group-hover:text-white transition-colors duration-300">
+                  <Phone className="w-6 h-6" />
+                </div>
+                <div>
+                  <h4 className="text-white font-semibold mb-1">Call Us</h4>
+                  <a 
+                    href={`tel:+91${contactInfo.phone}`}
+                    className="text-purple-400 hover:text-white transition-colors duration-300"
+                  >
+                    +91 {contactInfo.phone}
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* WhatsApp */}
+            <div className="bg-gradient-to-br from-gray-900/80 to-green-900/20 backdrop-blur-sm border border-green-400/20 rounded-2xl p-6 hover:border-green-400/40 transition-all duration-300 group">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-gradient-to-r from-green-600/20 to-white/10 rounded-lg text-green-400 group-hover:text-white transition-colors duration-300">
+                  <MessageSquare className="w-6 h-6" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-white font-semibold mb-1">WhatsApp</h4>
+                  <p className="text-green-400 text-sm mb-2">Get instant responses</p>
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-green-400 hover:text-white transition-colors duration-300 text-sm font-medium"
+                  >
+                    Start Chat
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Location */}
+            <div className="bg-gradient-to-br from-gray-900/80 to-purple-900/20 backdrop-blur-sm border border-purple-400/20 rounded-2xl p-6 hover:border-purple-400/40 transition-all duration-300 group">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-gradient-to-r from-purple-600/20 to-white/10 rounded-lg text-purple-400 group-hover:text-white transition-colors duration-300">
+                  <MapPin className="w-6 h-6" />
+                </div>
+                <div>
+                  <h4 className="text-white font-semibold mb-1">Location</h4>
+                  <p className="text-purple-400">{contactInfo.location}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Enquire Now */}
             <div className="bg-gradient-to-r from-purple-900/30 to-gray-900/50 backdrop-blur-sm border border-purple-400/30 rounded-2xl p-8 text-center">
               <h4 className="text-2xl font-bold text-white mb-4">Quick Enquiry</h4>
               <p className="text-gray-400 mb-6">
