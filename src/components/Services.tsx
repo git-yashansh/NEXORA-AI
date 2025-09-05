@@ -29,7 +29,7 @@ const Services: React.FC = () => {
     {
       icon: <BarChart3 className="w-12 h-12" />,
       title: "Data & Analytics",
-      description: "Transform raw data into actionable insights with advanced analytics, machine learning models, and real-time reporting solutions.",
+      description: "Transform raw data into actionable insights with advanced analytics, machine learning models, and real-time reporting solutions Data & Analytics",
       features: ["Machine Learning Models", "Real-time Analytics", "Business Intelligence", "Predictive Analytics"]
     },
     {
@@ -116,7 +116,7 @@ const Services: React.FC = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="group relative bg-gradient-to-br from-gray-900/80 to-black/60 backdrop-blur-sm border border-purple-400/20 rounded-2xl p-8 hover:border-purple-400/60 transition-all duration-500 hover:scale-105 animate-fade-in"
+              className="group relative flex flex-col h-full bg-gradient-to-br from-gray-900/80 to-black/60 backdrop-blur-sm border border-purple-400/20 rounded-2xl p-8 hover:border-purple-400/60 transition-all duration-500 hover:scale-105 animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Electric Border Effect */}
@@ -124,7 +124,7 @@ const Services: React.FC = () => {
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-600/20 via-white/10 to-purple-600/20 blur-sm animate-pulse" />
               </div>
 
-              {/* Floating Particles */}
+              {/* Floating Particles (hover only) */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 {[...Array(3)].map((_, i) => (
                   <div
@@ -140,36 +140,43 @@ const Services: React.FC = () => {
                 ))}
               </div>
 
-              <div className="relative z-10">
-                {/* Icon */}
-                <div className="mb-6 flex justify-center">
-                  <div className="p-4 bg-gradient-to-r from-purple-600/20 to-white/10 rounded-xl text-purple-400 group-hover:text-white transition-all duration-300 group-hover:scale-110">
-                    {service.icon}
+              <div className="relative z-10 flex flex-col h-full">
+                {/* Top content */}
+                <div className="flex-grow">
+                  {/* Icon */}
+                  <div className="mb-6 flex justify-center">
+                    <div className="p-4 bg-gradient-to-r from-purple-600/20 to-white/10 rounded-xl text-purple-400 group-hover:text-white transition-all duration-300 group-hover:scale-110">
+                      {service.icon}
+                    </div>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-xl font-semibold text-white mb-4 text-center group-hover:text-purple-200 transition-colors duration-300">
+                    {service.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-gray-400 mb-6 text-center leading-relaxed">
+                    {service.description}
+                  </p>
+
+                  {/* Features (always visible) */}
+                  <div className="space-y-2 mb-6">
+                    {service.features.slice(0, 3).map((feature, featureIndex) => (
+                      <div 
+                        key={featureIndex} 
+                        className="flex items-center gap-2 transition-all duration-500"
+                        style={{ transitionDelay: `${featureIndex * 0.1}s` }}
+                      >
+                        <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
+                        <span className="text-gray-300 text-sm">{feature}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                {/* Title */}
-                <h3 className="text-xl font-semibold text-white mb-4 text-center group-hover:text-purple-200 transition-colors duration-300">
-                  {service.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-gray-400 mb-6 text-center leading-relaxed">
-                  {service.description}
-                </p>
-
-                {/* Features */}
-                <div className="space-y-2 mb-6">
-                  {service.features.slice(0, 3).map((feature, featureIndex) => (
-                    <div key={featureIndex} className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500" style={{ transitionDelay: `${featureIndex * 0.1}s` }}>
-                      <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
-                      <span className="text-gray-300 text-sm">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Buttons */}
-                <div className="space-y-3">
+                {/* Buttons always aligned at bottom */}
+                <div className="space-y-3 mt-auto">
                   <button className="w-full flex items-center justify-center gap-2 text-purple-400 hover:text-white border border-purple-400/40 hover:border-purple-400 rounded-lg py-3 px-4 transition-all duration-300 hover:bg-purple-400/10">
                     Learn More
                   </button>
